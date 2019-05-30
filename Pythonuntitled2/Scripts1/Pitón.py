@@ -1,0 +1,48 @@
+from tkinter import *
+from tkinter import ttk
+##Funciones Botones
+def registrarMiembro():
+    registM=Tk()
+    registM.geometry("460x450")
+    registM.title("Registrar Miembro")
+    #registM.attributes("-toolwindow", 1)
+    cedlab=Label(registM,text="Cédula")
+    cedlab.grid(row=0,column=0,sticky=W,padx = 20)
+    entryCed=Entry(registM,width=20)
+    entryCed.grid(row=0,column=1,sticky=W)
+    NombrLab=Label(registM,text="Nombre Completo")
+    NombrLab.grid(row=1,column=0,sticky=W,padx = 20,pady = 5)
+    entryNomb = Entry(registM, width=40)
+    entryNomb.grid(row=1,column=1,sticky=W)
+    TelLab=Label(registM,text="Teléfono")
+    TelLab.grid(row=2,column=0,sticky=W,padx = 20)
+    entryTel=Entry(registM,width=20)
+    entryTel.grid(row=2,column=1,sticky=W)
+    v=IntVar()
+    Est=Radiobutton(registM, text="Estudiante", variable=v, value=1)
+    Est.grid(row=3,column=0,sticky=W,padx = 20)
+    Prof=Radiobutton(registM, text="Profesor", variable=v, value=2)
+    Prof.grid(row=4,column=0,sticky=W,padx = 20)
+    Admi=Radiobutton(registM, text="Administrativo", variable=v, value=3)
+    Admi.grid(row=5,column=0,sticky=W,padx = 20)
+    ttk.Separator(registM).place(x=0, y=150, relwidth=1)
+    #if var.get!=1:
+
+
+    registM.mainloop()
+##Tkinter
+principal=Tk()
+principal.geometry("230x190")
+principal.title("Elecciones TEC")
+principal.attributes("-toolwindow", 1)
+registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
+cargarDatos=Button(principal,text="Cargar Datos",command=None)
+registrarC=Button(principal,text="Registrar Candidato",command=None)
+generarV=Button(principal,text="Generar Votación",command=None)
+reporte=Button(principal,text="Reportes",command=None)
+registrarM.pack(padx=10, pady=5,side="top", fill="x")
+cargarDatos.pack(padx=10, pady=5,side="top", fill="x")
+registrarC.pack(padx=10, pady=5,side="top", fill="x")
+generarV.pack(padx=10, pady=5,side="top", fill="x")
+reporte.pack(padx=10, pady=5,side="top", fill="x")
+principal.mainloop()
