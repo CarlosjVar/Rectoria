@@ -3,6 +3,7 @@ from tkinter import ttk
 ##Funciones Botones
 def registrarMiembro():
     carreralist=["","IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
+    AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
     registM=Tk()
     registM.geometry("460x450")
     registM.title("Registrar Miembro")
@@ -19,14 +20,7 @@ def registrarMiembro():
     TelLab.grid(row=2,column=0,sticky=W,padx = 20,pady = 3)
     entryTel=Entry(registM,width=20)
     entryTel.grid(row=2,column=1,sticky=W)
-    v=IntVar()
-    Est=Radiobutton(registM, text="Estudiante", variable=v, value=1)
-    Est.grid(row=3,column=0,sticky=W,padx = 20)
-    Prof=Radiobutton(registM, text="Profesor", variable=v, value=2)
-    Prof.grid(row=4,column=0,sticky=W,padx = 20)
-    Admi=Radiobutton(registM, text="Administrativo", variable=v, value=3)
-    Admi.grid(row=5,column=0,sticky=W,padx = 20)
-    ttk.Separator(registM).place(x=0, y=159,relwidth=1)
+    ttk.Separator(registM).place(x=0, y=163,relwidth=1)
     carnLab=Label(registM,text="Carnet")
     carnLab.grid(row=6,column=0,sticky=W,padx = 20,pady=5)
     entrycarn = Entry(registM, width=40)
@@ -43,12 +37,60 @@ def registrarMiembro():
     Publicaciones=Text(registM,width=30,heigh=4)
     Publicaciones.grid(row=8,column=1,sticky=W,pady=7)
     ttk.Separator(registM).place(x=0, y=300, relwidth=1)
-
-
-
-
-
+    puestLab=Label(registM,text="Puesto")
+    puestLab.grid(row=9,column=0,sticky=W,padx=20,pady=5)
+    puestspin=Spinbox(registM,values=AdminList)
+    puestspin.grid(row=9,column=1,sticky=W)
+    ExtLab=Label(registM,text="Extensión")
+    ExtLab.grid(row=10,column=0,sticky=W,padx=20)
+    ExtEnt=Entry(registM,width=20)
+    ExtEnt.grid(row=10,column=1,sticky=W)
+    ttk.Separator(registM).place(x=0, y=360, relwidth=1)
+    infoError=Label(registM,text="Aquí van a ir las validaciones")
+    infoError.place(x=145,y=365)
+    registrar=Button(registM,text="Registrar",width=20)
+    registrar.place(x=70,y=400)
+    limpiar=Button(registM,text="Limpiar",width=20,command=lambda :botonLimp(entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt))
+    limpiar.place(x=240,y=400)
+    v=IntVar()
+    Est=Radiobutton(registM, text="Estudiante", variable=v, value=1,command=lambda:radioEST(carrera,entrycarn,Publicaciones,puestspin,ExtEnt))
+    Est.grid(row=3,column=0,sticky=W,padx = 20)
+    Prof=Radiobutton(registM, text="Profesor", variable=v, value=2,command=lambda:radioProf(carrera,entrycarn,Publicaciones,puestspin,ExtEnt))
+    Prof.grid(row=4,column=0,sticky=W,padx = 20)
+    Admi=Radiobutton(registM, text="Administrativo", variable=v, value=3,command=lambda:radioAdmi(carrera,entrycarn,Publicaciones,puestspin,ExtEnt))
+    Admi.grid(row=5,column=0,sticky=W,padx = 20)
+    Est.invoke()
     registM.mainloop()
+
+def radioEST(a,b,c,d,e):
+    a.config(state=NORMAL)
+    b.config(state=NORMAL)
+    c.config(state=DISABLED)
+    d.config(state=DISABLED)
+    e.config(state=DISABLED)
+
+def radioProf(a,b,c,d,e):
+    a.config(state=DISABLED)
+    b.config(state=DISABLED)
+    c.config(state=NORMAL)
+    d.config(state=DISABLED)
+    e.config(state=DISABLED)
+
+def radioAdmi(a,b,c,d,e):
+    a.config(state=DISABLED)
+    b.config(state=DISABLED)
+    c.config(state=DISABLED)
+    d.config(state=NORMAL)
+    e.config(state=NORMAL)
+def botonLimp(a,b,c,d,e,f):
+    a.delete(0,END)
+    b.delete(0,END)
+    c.delete(0,END)
+    d.delete('1.0',END)
+    e.delete(0,END)
+    f.delete(0,END)
+
+
 ##Tkinter
 principal=Tk()
 principal.geometry("230x190")
