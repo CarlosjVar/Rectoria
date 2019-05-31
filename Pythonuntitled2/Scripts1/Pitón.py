@@ -1,5 +1,9 @@
 from tkinter import *
 from tkinter import ttk
+#Varibales Globales
+listaMiembros=[]
+
+
 ##Funciones Botones
 def registrarMiembro():
     carreralist=["","IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
@@ -62,6 +66,7 @@ def registrarMiembro():
     Est.invoke()
     registM.mainloop()
 
+
 def radioEST(a,b,c,d,e):
     a.config(state=NORMAL)
     b.config(state=NORMAL)
@@ -82,6 +87,7 @@ def radioAdmi(a,b,c,d,e):
     c.config(state=DISABLED)
     d.config(state=NORMAL)
     e.config(state=NORMAL)
+    
 def botonLimp(a,b,c,d,e,f):
     a.delete(0,END)
     b.delete(0,END)
@@ -96,7 +102,7 @@ principal=Tk()
 principal.geometry("230x190")
 principal.title("Elecciones TEC")
 principal.attributes("-toolwindow", 1)
-registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
+registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro())
 cargarDatos=Button(principal,text="Cargar Datos",command=None)
 registrarC=Button(principal,text="Registrar Candidato",command=None)
 generarV=Button(principal,text="Generar Votación",command=None)
