@@ -2,20 +2,21 @@ from tkinter import *
 from tkinter import ttk
 ##Funciones Botones
 def registrarMiembro():
+    carreralist=["","IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
     registM=Tk()
     registM.geometry("460x450")
     registM.title("Registrar Miembro")
     #registM.attributes("-toolwindow", 1)
     cedlab=Label(registM,text="Cédula")
-    cedlab.grid(row=0,column=0,sticky=W,padx = 20)
+    cedlab.grid(row=0,column=0,sticky=W,padx = 20,pady = 5)
     entryCed=Entry(registM,width=20)
     entryCed.grid(row=0,column=1,sticky=W)
     NombrLab=Label(registM,text="Nombre Completo")
-    NombrLab.grid(row=1,column=0,sticky=W,padx = 20,pady = 5)
+    NombrLab.grid(row=1,column=0,sticky=W,padx = 20,pady = 3)
     entryNomb = Entry(registM, width=40)
     entryNomb.grid(row=1,column=1,sticky=W)
     TelLab=Label(registM,text="Teléfono")
-    TelLab.grid(row=2,column=0,sticky=W,padx = 20)
+    TelLab.grid(row=2,column=0,sticky=W,padx = 20,pady = 3)
     entryTel=Entry(registM,width=20)
     entryTel.grid(row=2,column=1,sticky=W)
     v=IntVar()
@@ -25,8 +26,26 @@ def registrarMiembro():
     Prof.grid(row=4,column=0,sticky=W,padx = 20)
     Admi=Radiobutton(registM, text="Administrativo", variable=v, value=3)
     Admi.grid(row=5,column=0,sticky=W,padx = 20)
-    ttk.Separator(registM).place(x=0, y=150, relwidth=1)
-    #if var.get!=1:
+    ttk.Separator(registM).place(x=0, y=159,relwidth=1)
+    carnLab=Label(registM,text="Carnet")
+    carnLab.grid(row=6,column=0,sticky=W,padx = 20,pady=5)
+    entrycarn = Entry(registM, width=40)
+    entrycarn.grid(row=6, column=1, sticky=W)
+    carreraLab=Label(registM,text="Carrera")
+    carreraLab.grid(row=7,column=0,sticky=W,padx = 20)
+    variable = StringVar()
+    variable.set(carreralist[0])
+    carrera=ttk.Combobox(registM,values=carreralist,width=30)
+    carrera.grid(row=7,column=1,sticky=W,pady = 3)
+    ttk.Separator(registM).place(x=0,y=220,relwidth=1)
+    PublLab=Label(registM,text="Publicaciones")
+    PublLab.grid(row=8,column=0,sticky=W,padx=20,pady=5)
+    Publicaciones=Text(registM,width=30,heigh=4)
+    Publicaciones.grid(row=8,column=1,sticky=W,pady=7)
+    ttk.Separator(registM).place(x=0, y=300, relwidth=1)
+
+
+
 
 
     registM.mainloop()
