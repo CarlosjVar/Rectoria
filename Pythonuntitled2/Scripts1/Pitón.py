@@ -1,8 +1,9 @@
 from tkinter import *
+from funciones import *
 from tkinter import ttk
 #Varibales Globales
 listaMiembros=[]
-
+tipo=0
 
 ##Funciones Botones
 def registrarMiembro():
@@ -52,7 +53,7 @@ def registrarMiembro():
     ttk.Separator(registM).place(x=0, y=360, relwidth=1)
     infoError=Label(registM,text="Aquí van a ir las validaciones")
     infoError.place(x=145,y=365)
-    registrar=Button(registM,text="Registrar",width=20)
+    registrar=Button(registM,text="Registrar",width=20,command= lambda: nuevoMiembro(listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo))
     registrar.place(x=70,y=400)
     limpiar=Button(registM,text="Limpiar",width=20,command=lambda :botonLimp(entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt))
     limpiar.place(x=240,y=400)
@@ -68,6 +69,8 @@ def registrarMiembro():
 
 
 def radioEST(a,b,c,d,e):
+    global tipo
+    tipo=1
     a.config(state=NORMAL)
     b.config(state=NORMAL)
     c.config(state=DISABLED)
@@ -75,6 +78,8 @@ def radioEST(a,b,c,d,e):
     e.config(state=DISABLED)
 
 def radioProf(a,b,c,d,e):
+    global tipo
+    tipo=2
     a.config(state=DISABLED)
     b.config(state=DISABLED)
     c.config(state=NORMAL)
@@ -82,6 +87,8 @@ def radioProf(a,b,c,d,e):
     e.config(state=DISABLED)
 
 def radioAdmi(a,b,c,d,e):
+    global tipo
+    tipo=3
     a.config(state=DISABLED)
     b.config(state=DISABLED)
     c.config(state=DISABLED)
