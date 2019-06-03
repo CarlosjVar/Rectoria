@@ -53,6 +53,14 @@ class Estudiante (Persona):
     def getCarnet(self):
         return self.carnet
 
+    def mostrar (self):
+        print(self.cedula)
+        print(self.telefono)
+        print(self.nombreCompleto)
+        print(self.carnet)
+        print(self.carrera)
+        return
+
 class Profesor(Persona):
     "Atributos"
     publicaciones=""
@@ -78,6 +86,13 @@ class Profesor(Persona):
     def getTipo (self):
         return self.tipo
 
+    def mostrar (self):
+        print(self.cedula)
+        print(self.telefono)
+        print(self.nombreCompleto)
+        print(self.publicaciones)
+        return
+
 class Administrativo(Persona):
     "Atributos"
     puesto=""
@@ -99,6 +114,14 @@ class Administrativo(Persona):
 
     def getTipo (self):
         return self.tipo
+
+    def mostrar(self):
+        print(self.cedula)
+        print(self.telefono)
+        print(self.nombreCompleto)
+        print(self.puesto)
+        print(self.extension)
+        return
 
     
 

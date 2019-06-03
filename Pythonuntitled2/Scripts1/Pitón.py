@@ -53,7 +53,7 @@ def registrarMiembro():
     ttk.Separator(registM).place(x=0, y=360, relwidth=1)
     infoError=Label(registM,text="Aquí van a ir las validaciones")
     infoError.place(x=145,y=365)
-    registrar=Button(registM,text="Registrar",width=20,command= lambda: nuevoMiembro(listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo))
+    registrar=Button(registM,text="Registrar",width=20,command= lambda: nuevoMiembro(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError))
     registrar.place(x=70,y=400)
     limpiar=Button(registM,text="Limpiar",width=20,command=lambda :botonLimp(entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt))
     limpiar.place(x=240,y=400)
