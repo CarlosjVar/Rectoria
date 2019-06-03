@@ -5,6 +5,9 @@ from tkinter import ttk
 import re
 
 #Definición de funciones
+lista1=["Hola","me","llamo","idiota","yoda","es","gay"]
+lista2=["Pene","Inserte","texto","random","por","favor","matenme"]
+matriz=[lista1,lista2]
 def nuevoMiembro(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError):
     x=entryCed.get()
     y=entryNomb.get()
@@ -53,4 +56,21 @@ def nuevoMiembro(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicac
     for objeto in listaMiembros:
         objeto.mostrar()
     return
+def infoCandidatos(listaMiembros):
+    with open("Reporte.html","w",encoding="UTF-8") as reporte:
+        reporte.write("<!DOCTYPE html>")
+        reporte.write("<meta charset=UTF-16>")
+        reporte.write("<body>")
+        reporte.write("<table border=1 align=center>")
+        reporte.write("<caption>Candidatos para rector</caption")
+        reporte.write("<tr><td>Cédula</td><td>Nombre Completo</td><td>Teléfono</td><td>Publicaciones</td></tr>")
+        templateFila="""<tr>
+        <td>"{p1}"</td>
+        <td>"{p2}"</td>)<td>"{p3}"</td><td>"{p4}"</td></tr>"""
+        for persona in listaMiembros:
+            if persona.tipo=="profesor":
+                fila=templateFila.format(p1=persona.cedula,p2=persona.nombreCompleto,p3=persona.telefono,p4=persona.publicaciones)
+                reporte.write(fila)
+        reporte.write("</table>")
+        reporte.write("</body>")
 
