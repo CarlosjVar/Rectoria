@@ -1,18 +1,20 @@
+#Importación de librerías
 from tkinter import *
 from funciones import *
 from tkinter import ttk
+
 #Varibales Globales
 listaMiembros=[]
 tipo=0
+carreralist=["IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
+AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
 
 ##Funciones Botones
 def registrarMiembro():
     carreralist=["","IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
-    AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
     registM=Tk()
     registM.geometry("460x450")
     registM.title("Registrar Miembro")
-    #registM.attributes("-toolwindow", 1)
     cedlab=Label(registM,text="Cédula")
     cedlab.grid(row=0,column=0,sticky=W,padx = 20,pady = 5)
     entryCed=Entry(registM,width=20)
@@ -53,7 +55,7 @@ def registrarMiembro():
     ttk.Separator(registM).place(x=0, y=360, relwidth=1)
     infoError=Label(registM,text="Aquí van a ir las validaciones")
     infoError.place(x=145,y=365)
-    registrar=Button(registM,text="Registrar",width=20,command= lambda: nuevoMiembro(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError))
+    registrar=Button(registM,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError))
     registrar.place(x=70,y=400)
     limpiar=Button(registM,text="Limpiar",width=20,command=lambda :botonLimp(entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt))
     limpiar.place(x=240,y=400)
@@ -65,8 +67,14 @@ def registrarMiembro():
     Admi=Radiobutton(registM, text="Administrativo", variable=v, value=3,command=lambda:radioAdmi(carrera,entrycarn,Publicaciones,puestspin,ExtEnt))
     Admi.grid(row=5,column=0,sticky=W,padx = 20)
     Est.invoke()
+    mostrar=Button(registM, text="Muestra todo en consola",command=lambda: mostrarTodo(listaMiembros))
+    mostrar.place(x=460,y=1)
     registM.mainloop()
 
+def mostrarTodo (listaMiembros):
+    for objeto in listaMiembros:
+        objeto.mostrar()
+    return 
 
 def radioEST(a,b,c,d,e):
     global tipo
@@ -124,7 +132,6 @@ def reportes():
 principal=Tk()
 principal.geometry("230x190")
 principal.title("Elecciones TEC")
-#principal.attributes("-toolwindow", 1)
 registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
 cargarDatos=Button(principal,text="Cargar Datos",command=None)
 registrarC=Button(principal,text="Registrar Candidato",command=None)
