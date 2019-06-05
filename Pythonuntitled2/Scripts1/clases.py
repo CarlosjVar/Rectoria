@@ -54,6 +54,7 @@ class Estudiante (Persona):
         return self.carnet
 
     def mostrar (self):
+        print("Tipo: "+self.tipo)
         print(self.cedula)
         print(self.telefono)
         print(self.nombreCompleto)
@@ -88,6 +89,7 @@ class Profesor(Persona):
         return self.tipo
 
     def mostrar (self):
+        print("Tipo: "+self.tipo)
         print(self.cedula)
         print(self.telefono)
         print(self.nombreCompleto)
@@ -118,6 +120,7 @@ class Administrativo(Persona):
         return self.tipo
 
     def mostrar(self):
+        print("Tipo: "+self.tipo)
         print(self.cedula)
         print(self.telefono)
         print(self.nombreCompleto)

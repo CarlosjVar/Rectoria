@@ -4,12 +4,54 @@ from tkinter import *
 from tkinter import ttk
 import re
 from tkinter import messagebox
-import pickle 
+import pickle
+import random
 
 #Definición de funciones
-#lista1=["Hola","me","llamo","idiota","yoda","es","gay"]
-#lista2=["Pene","Inserte","texto","random","por","favor","matenme"]
-#matriz=[lista1,lista2]
+def crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacion):
+    cant=entryCant.get()
+    try:
+        cant=int(cant)
+        if cant<=0 or cant>100:
+            validacion.config(text="La cantidad de miembros a generar debe ser un número entre 1 y 100")
+            return
+    except:
+        validacion.config(text="La cantidad de miembros a generar debe ser un número entre 1 y 100")
+        return
+    MsgBox =messagebox.askquestion("Confirmación", "¿Esta seguro que desea generar "+str(cant)+" miembros?") 
+    if MsgBox == 'yes':
+        for i in range(cant):
+            cedula=str(random.randint(1,7))
+            for cont1 in range(8):
+                cedula=cedula+str(random.randint(0,9))
+            telefono=str(random.randint(1,9))
+            for cont2 in range (7):
+                telefono=telefono+str(random.randint(0,9))
+            nombre=nombList[random.randint(0,13)]
+            tipo=random.randint(1,3)
+            if tipo==1:
+                carne=str(random.randint(1,9))
+                for cont3 in range(9):
+                    carne=carne+str(random.randint(0,9))
+                carrera=carreralist[random.randint(0,4)]
+                nuevo=Estudiante(int(cedula),nombre,int(telefono),int(carne))
+                nuevo.setCarrera(carrera)
+                listaMiembros.append(nuevo)
+            elif tipo==2:
+                publicaciones="Sin publicaciones registradas"
+                nuevo=Profesor(int(cedula),nombre,int(telefono),publicaciones)
+                listaMiembros.append(nuevo)
+            else:
+                puesto=AdminList[random.randint(0,3)]
+                extension=str(random.randint(1,9))
+                for cont4 in range(3):
+                    extension=extension+str(random.randint(0,4))
+                nuevo=Administrativo(int(cedula),nombre,int(telefono),puesto,int(extension))
+                listaMiembros.append(nuevo)
+        guardarPadron (listaMiembros)
+        validacion.config(text="Se han generado "+str(cant)+" miembros")
+    return
+
 
 def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError):
     if tipo==1:
@@ -38,14 +80,18 @@ def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,ca
             return
         nuevo=Administrativo(x,y,a,z,b)
         listaMiembros.append(nuevo)
-    with open("padrón.txt","wb") as f:
-        pickle.dump(listaMiembros,f)
-        f.close()
+    guardarPadron (listaMiembros)    
     infoError.config (text="Miembro registrado")
     return
 
+
+def guardarPadron (listaMiembros):
+    with open("padrón.txt","wb") as f:
+        pickle.dump(listaMiembros,f)
+        f.close()
+    return
+
 def confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError):
-    print("Llego a la confirmación")
     MsgBox =messagebox.askquestion('Confirmación', '¿Esta seguro que desea registrar este miembro?') 
     if MsgBox == 'yes':
         auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError) 
@@ -53,7 +99,6 @@ def confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entry
 
     
 def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError):
-    print("Llego a la validación")
     x=entryCed.get()
     y=entryNomb.get()
     a=entryTel.get()
@@ -68,9 +113,7 @@ def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publ
         return
     x=int(x)
     a=int(a)
-    print("Llego al registro")
     nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError)
-    print("salió del registro")
     return
     
     

@@ -2,15 +2,31 @@
 from tkinter import *
 from funciones import *
 from tkinter import ttk
-import pickle 
+import pickle
+import random
 
 #Varibales Globales
+nombList=["Mario","Alejandro","Carlos","Randall","Esteban","Laura","Maria","Gabriela","Kimberly","Sandra","Karla","Pablo","Luis","Sebastián"]
 listaMiembros=[]
 tipo=0
 carreralist=["IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
 AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
 
 ##Funciones Botones
+def generarMiembro():
+    generarM=Tk()
+    generarM.geometry("450x200")
+    generarM.title("Genenerar miembros")
+    entryCant=Entry(generarM,width=20)
+    entryCant.place(x=275,y=26)
+    labelCant=Label(generarM,text="Cantidad de miembros a generar: ")
+    labelCant.place(x=25,y=26)
+    validacion=Label(generarM,text="")
+    validacion.place(x=200,y=100)
+    generar=Button(generarM, text="Generar miembros",command=lambda: crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacion))
+    generar.place(x=50,y=100)
+    generarM.mainloop()
+
 def registrarMiembro():
     carreralist=["","IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
     registM=Tk()
@@ -142,7 +158,7 @@ try:
 except:
     relleno=0
 registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
-cargarDatos=Button(principal,text="Cargar Datos",command=None)
+cargarDatos=Button(principal,text="Cargar Datos",command=generarMiembro)
 registrarC=Button(principal,text="Registrar Candidato",command=None)
 generarV=Button(principal,text="Generar Votación",command=None)
 reporte=Button(principal,text="Reportes",command=reportes)
