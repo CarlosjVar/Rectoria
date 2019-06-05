@@ -21,9 +21,15 @@ def crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacio
     MsgBox =messagebox.askquestion("Confirmación", "¿Esta seguro que desea generar "+str(cant)+" miembros?") 
     if MsgBox == 'yes':
         for i in range(cant):
-            cedula=str(random.randint(1,7))
-            for cont1 in range(8):
-                cedula=cedula+str(random.randint(0,9))
+            cedula=generarCedula()
+            cont1=0
+            while cont1<=(len(listaMiembros)-1):
+                objeto=listaMiembros[cont1]
+                if objeto.getCedula()==cedula:
+                    cedula=generarCedula()
+                    cont1=0
+                else:
+                    cont1+=1
             telefono=str(random.randint(1,9))
             for cont2 in range (7):
                 telefono=telefono+str(random.randint(0,9))
@@ -46,12 +52,17 @@ def crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacio
                 extension=str(random.randint(1,9))
                 for cont4 in range(3):
                     extension=extension+str(random.randint(0,4))
-                nuevo=Administrativo(int(cedula),nombre,int(telefono),puesto,int(extension))
+                nuevo=Administrativo(cedula,nombre,int(telefono),puesto,int(extension))
                 listaMiembros.append(nuevo)
         guardarPadron (listaMiembros)
         validacion.config(text="Se han generado "+str(cant)+" miembros")
     return
 
+def generarCedula ():
+    cedula=str(random.randint(1,7))
+    for cont1 in range(8):
+        cedula=cedula+str(random.randint(0,9))
+    return int(cedula)
 
 def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError):
     if tipo==1:
@@ -63,6 +74,9 @@ def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,ca
         b=carrera.get()
         if b not in carreralist:
             infoError.config (text="La carrera indicada debe escogerse de entre las opciones dadas")
+            return
+        if b=="":
+            infoError.config (text="Debe indicar una carrera para el miembro a registrar")
             return
         nuevo.setCarrera(b)
         listaMiembros.append(nuevo)
@@ -95,7 +109,8 @@ def confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entry
     MsgBox =messagebox.askquestion('Confirmación', '¿Esta seguro que desea registrar este miembro?') 
     if MsgBox == 'yes':
         auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError) 
-    return 
+    return
+
 
     
 def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError):
@@ -108,10 +123,14 @@ def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publ
     if not re.match ("[0-9]{9}",x):
         infoError.config (text="Como cédula debe introducir una serie de 9 dígitos")
         return
+    x=int(x)
+    for objeto in listaMiembros:
+        if objeto.getCedula()==x:
+           infoError.config (text="Ya existe un miembro registrado con la cédula indicada")
+           return
     if not re.match ("[0-9]{8}",a):
         infoError.config (text="El número telefónico debe estar compuesto por 8 dígitos")
         return
-    x=int(x)
     a=int(a)
     nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError)
     return
