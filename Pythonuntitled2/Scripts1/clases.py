@@ -55,11 +55,11 @@ class Estudiante (Persona):
 
     def mostrar (self):
         print("Tipo: "+self.tipo)
-        print(self.cedula)
-        print(self.telefono)
-        print(self.nombreCompleto)
-        print(self.carnet)
-        print(self.carrera)
+        print("Cédula: "+str(self.cedula))
+        print("Telefono: "+str(self.telefono))
+        print("Nombre: "+self.nombreCompleto)
+        print("Carnet: "+str(self.carnet))
+        print("Carrera: "+str(self.carrera))
         print("*******************")
         return
 
@@ -90,10 +90,11 @@ class Profesor(Persona):
 
     def mostrar (self):
         print("Tipo: "+self.tipo)
-        print(self.cedula)
-        print(self.telefono)
-        print(self.nombreCompleto)
-        print(self.publicaciones)
+        print("Cédula: "+str(self.cedula))
+        print("Telefono: "+str(self.telefono))
+        print("Nombre: "+self.nombreCompleto)
+        print("Publicaciones: "+self.publicaciones)
+        print("Candidatura: "+self.candidato)
         print("*******************")
         return
 
@@ -121,11 +122,11 @@ class Administrativo(Persona):
 
     def mostrar(self):
         print("Tipo: "+self.tipo)
-        print(self.cedula)
-        print(self.telefono)
-        print(self.nombreCompleto)
-        print(self.puesto)
-        print(self.extension)
+        print("Cédula: "+str(self.cedula))
+        print("Telefono: "+str(self.telefono))
+        print("Nombre: "+self.nombreCompleto)
+        print("Puesto: "+self.puesto)
+        print("Extensión: "+str(self.extension))
         print("*******************")
         return
 

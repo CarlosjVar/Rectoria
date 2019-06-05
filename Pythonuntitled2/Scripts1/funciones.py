@@ -8,6 +8,26 @@ import pickle
 import random
 
 #Definición de funciones
+def postularCandidato (listaMiembros,contC,entryCedula,validacion):
+    x=entryCedula.get()
+    if not re.match ("^[0-9]{9}$",x):
+        validacion.config (text="Como cédula debe introducir una serie de 9 dígitos")
+        return
+    if contC[0]>=4:
+        validacion.config (text="Ya se ha alcanzo el máximo de candidatos")
+        return
+    for objeto in listaMiembros:
+        if objeto.getTipo()=="profesor":
+            if objeto.getCedula()==int(x):
+                objeto.setCandidato("2019-"+str(contC[0]+1))
+                contC[0]=contC[0]+1
+                validacion.config (text="Se ha postulado a "+objeto.getnombreCompleto()+" como "+str(contC[0])+"° candidato")
+                guardarPadron (listaMiembros)
+                return
+    validacion.config (text="No se ha encontrado ningún profesor con el número de cédula indicado")
+    return
+
+
 def crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacion):
     cant=entryCant.get()
     try:
@@ -67,7 +87,7 @@ def generarCedula ():
 def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError):
     if tipo==1:
         z=entrycarn.get()
-        if not re.match ("[0-9]{10}",z):
+        if not re.match ("^[0-9]{10}$",z):
             infoError.config (text="Debe indicar un carnet válido para el alumno a registrar")
             return
         nuevo=Estudiante(x,y,a,z)
@@ -120,7 +140,7 @@ def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publ
     if y=="":
         infoError.config (text="Debe indicar un nombre para el miembro a registrar")
         return
-    if not re.match ("[0-9]{9}",x):
+    if not re.match ("^[0-9]{9}$",x):
         infoError.config (text="Como cédula debe introducir una serie de 9 dígitos")
         return
     x=int(x)
@@ -128,7 +148,7 @@ def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publ
         if objeto.getCedula()==x:
            infoError.config (text="Ya existe un miembro registrado con la cédula indicada")
            return
-    if not re.match ("[0-9]{8}",a):
+    if not re.match ("^[0-9]{8}$",a):
         infoError.config (text="El número telefónico debe estar compuesto por 8 dígitos")
         return
     a=int(a)

@@ -4,6 +4,9 @@ from funciones import *
 from tkinter import ttk
 import pickle
 import random
+import re
+from tkinter import messagebox
+
 
 #Varibales Globales
 nombList=["Mario","Alejandro","Carlos","Randall","Esteban","Laura","Maria","Gabriela","Kimberly","Sandra","Karla","Pablo","Luis","Sebastián"]
@@ -11,8 +14,25 @@ listaMiembros=[]
 tipo=0
 carreralist=["IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
 AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
+contC=[0]
 
 ##Funciones Botones
+def postularMiembro():
+    postularM=Tk()
+    postularM.geometry("450x200")
+    postularM.title("Postular candidato")
+    entryCedula=Entry(postularM,width=20)
+    entryCedula.place(x=275,y=26)
+    labelCedula=Label(postularM,text="Cédula del candidato a postular: ")
+    labelCedula.place(x=25,y=26)
+    validacion2=Label(postularM,text="")
+    validacion2.place(x=200,y=100)
+    postular=Button(postularM, text="Postular candidato",command=lambda: postularCandidato(listaMiembros,contC,entryCedula,validacion2))
+    postular.place(x=50,y=100)
+    postularM.mainloop()
+
+
+
 def generarMiembro():
     generarM=Tk()
     generarM.geometry("450x200")
@@ -159,7 +179,7 @@ except:
     relleno=0
 registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
 cargarDatos=Button(principal,text="Cargar Datos",command=generarMiembro)
-registrarC=Button(principal,text="Registrar Candidato",command=None)
+registrarC=Button(principal,text="Registrar Candidato",command=postularMiembro)
 generarV=Button(principal,text="Generar Votación",command=None)
 reporte=Button(principal,text="Reportes",command=reportes)
 registrarM.pack(padx=10, pady=5,side="top", fill="x")
