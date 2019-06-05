@@ -2,6 +2,7 @@
 from tkinter import *
 from funciones import *
 from tkinter import ttk
+import pickle 
 
 #Varibales Globales
 listaMiembros=[]
@@ -76,6 +77,7 @@ def mostrarTodo (listaMiembros):
         objeto.mostrar()
     return 
 
+##Auxiliares de botones
 def radioEST(a,b,c,d,e):
     global tipo
     tipo=1
@@ -132,6 +134,13 @@ def reportes():
 principal=Tk()
 principal.geometry("230x190")
 principal.title("Elecciones TEC")
+try:
+    with open("padrón.txt","rb") as f:
+        listaMiembros=pickle.load(f)
+    msg=messagebox.showinfo("Padrón","Se ha cargado un padrón guardado anteriormente")
+    f.close()
+except:
+    relleno=0
 registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
 cargarDatos=Button(principal,text="Cargar Datos",command=None)
 registrarC=Button(principal,text="Registrar Candidato",command=None)

@@ -59,6 +59,7 @@ class Estudiante (Persona):
         print(self.nombreCompleto)
         print(self.carnet)
         print(self.carrera)
+        print("*******************")
         return
 
 class Profesor(Persona):
@@ -91,6 +92,7 @@ class Profesor(Persona):
         print(self.telefono)
         print(self.nombreCompleto)
         print(self.publicaciones)
+        print("*******************")
         return
 
 class Administrativo(Persona):
@@ -121,6 +123,7 @@ class Administrativo(Persona):
         print(self.nombreCompleto)
         print(self.puesto)
         print(self.extension)
+        print("*******************")
         return
 
     

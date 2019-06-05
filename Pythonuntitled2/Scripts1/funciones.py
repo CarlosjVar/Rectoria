@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk
 import re
 from tkinter import messagebox
+import pickle 
 
 #Definición de funciones
 #lista1=["Hola","me","llamo","idiota","yoda","es","gay"]
@@ -11,7 +12,6 @@ from tkinter import messagebox
 #matriz=[lista1,lista2]
 
 def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError):
-    print("inició el registro")
     if tipo==1:
         z=entrycarn.get()
         if not re.match ("[0-9]{10}",z):
@@ -22,7 +22,6 @@ def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,ca
         if b not in carreralist:
             infoError.config (text="La carrera indicada debe escogerse de entre las opciones dadas")
             return
-        print("Pasó la validación")
         nuevo.setCarrera(b)
         listaMiembros.append(nuevo)
     elif tipo==2:
@@ -39,8 +38,10 @@ def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,ca
             return
         nuevo=Administrativo(x,y,a,z,b)
         listaMiembros.append(nuevo)
+    with open("padrón.txt","wb") as f:
+        pickle.dump(listaMiembros,f)
+        f.close()
     infoError.config (text="Miembro registrado")
-    print ("Terminó de registrar")
     return
 
 def confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError):
