@@ -18,34 +18,46 @@ contC=[0]
 diccionarioVotos={}
 
 ##Funciones Botones
+def confirmacionCandidato(listaMiembros,contC,entryCedula,validacion2):
+    MsgBox = messagebox.askquestion('Confirmación', '¿Esta seguro que desea postular a esta persona?')
+    if MsgBox == 'yes':
+        return postularCandidato(listaMiembros,contC,entryCedula,validacion2)
+    else:
+        return
 def postularMiembro():
     postularM=Tk()
-    postularM.geometry("450x200")
+    postularM.geometry("340x160")
     postularM.title("Postular candidato")
-    entryCedula=Entry(postularM,width=20)
-    entryCedula.place(x=275,y=26)
-    labelCedula=Label(postularM,text="Cédula del candidato a postular: ")
-    labelCedula.place(x=25,y=26)
+    entryCedula=Text(postularM,height=2, width=20)
+    entryCedula.place(x=125,y=26)
+    labelCedula=Label(postularM,text="Cédula ")
+    labelCedula.place(x=45,y=26)
     validacion2=Label(postularM,text="")
-    validacion2.place(x=200,y=100)
-    postular=Button(postularM, text="Postular candidato",command=lambda: postularCandidato(listaMiembros,contC,entryCedula,validacion2))
-    postular.place(x=50,y=100)
+    validacion2.place(x=180,y=126,anchor="center")
+    postular=Button(postularM, text="Buscar",width=15,relief=GROOVE,command=lambda: confirmacionCandidato(listaMiembros,contC,entryCedula,validacion2))
+    postular.place(x=45,y=80)
+    limpiar = Button(postularM, relief=GROOVE, text="Limpiar", width=15,command=lambda: botonLimp([entryCedula]))
+    limpiar.place(x=180,y=80)
     postularM.mainloop()
 
 
 
 def generarMiembro():
     generarM=Tk()
-    generarM.geometry("450x200")
+    generarM.geometry("410x170")
     generarM.title("Genenerar miembros")
-    entryCant=Entry(generarM,width=20)
-    entryCant.place(x=275,y=26)
+    labtit=Label(generarM,text="Carga automática aleatoria")
+    labtit.grid(row=0,column=0,padx=30,pady=10 ,sticky=W)
+    entryCant=Entry(generarM,width=25)
+    entryCant.grid(row=1,column=1,sticky=W)
     labelCant=Label(generarM,text="Cantidad de miembros a generar: ")
-    labelCant.place(x=25,y=26)
+    labelCant.grid(row=1,column=0,padx=30,sticky=W)
     validacion=Label(generarM,text="")
-    validacion.place(x=200,y=100)
-    generar=Button(generarM, text="Generar miembros",command=lambda: crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacion,contC))
-    generar.place(x=50,y=100)
+    validacion.place(x=210,y=120,anchor="center")
+    generar=Button(generarM,relief=GROOVE, text="Generar miembros",command=lambda: crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacion,contC))
+    generar.place(x=90,y=80)
+    limpiar = Button(generarM, relief=GROOVE, text="Limpiar", width=15, command=lambda: botonLimp([entryCant]))
+    limpiar.place(x=220,y=80)
     generarM.mainloop()
 
 def registrarMiembro():
@@ -95,7 +107,7 @@ def registrarMiembro():
     infoError.place(x=145,y=365)
     registrar=Button(registM,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC))
     registrar.place(x=70,y=400)
-    limpiar=Button(registM,text="Limpiar",width=20,command=lambda :botonLimp(entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt))
+    limpiar=Button(registM,relief=GROOVE,text="Limpiar",width=20,command=lambda :botonLimp([entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt]))
     limpiar.place(x=240,y=400)
     v=IntVar()
     Est=Radiobutton(registM, text="Estudiante", variable=v, value=1,command=lambda:radioEST(carrera,entrycarn,Publicaciones,puestspin,ExtEnt))
@@ -105,7 +117,7 @@ def registrarMiembro():
     Admi=Radiobutton(registM, text="Administrativo", variable=v, value=3,command=lambda:radioAdmi(carrera,entrycarn,Publicaciones,puestspin,ExtEnt))
     Admi.grid(row=5,column=0,sticky=W,padx = 20)
     Est.invoke()
-    mostrar=Button(registM, text="Muestra todo en consola",command=lambda: mostrarTodo(listaMiembros))
+    mostrar=Button(registM,relief=GROOVE, text="Muestra todo en consola",command=lambda: mostrarTodo(listaMiembros))
     mostrar.place(x=460,y=1)
     registM.mainloop()
 
@@ -142,24 +154,23 @@ def radioAdmi(a,b,c,d,e):
     d.config(state=NORMAL)
     e.config(state=NORMAL)
     
-def botonLimp(a,b,c,d,e,f):
-    a.delete(0,END)
-    b.delete(0,END)
-    c.delete(0,END)
-    d.delete('1.0',END)
-    e.delete(0,END)
-    f.delete(0,END)
+def botonLimp(lista):
+    for widget in lista:
+        try:
+            widget.delete(0, END)
+        except:
+            widget.delete('1.0', END)
 
 def reportes():
     principal = Tk()
     principal.geometry("230x190")
     principal.title("Elecciones TEC")
     principal.attributes("-toolwindow", 1)
-    listaC = Button(principal, text="Lista de Candidatos", command= lambda: infoCandidatos(listaMiembros))
-    cantidadV = Button(principal, text="Cantidad de votantes por candidato", command=None)
-    seguidoresC = Button(principal, text="Seguidores por candidato", command=None)
-    votRol = Button(principal, text="Votante por rol", command=None)
-    novot = Button(principal, text="Lista de no votantes", command=None)
+    listaC = Button(principal,relief=GROOVE, text="Lista de Candidatos", command= lambda: infoCandidatos(listaMiembros))
+    cantidadV = Button(principal,relief=GROOVE, text="Cantidad de votantes por candidato", command=None)
+    seguidoresC = Button(principal,relief=GROOVE, text="Seguidores por candidato", command=None)
+    votRol = Button(principal, relief=GROOVE,text="Votante por rol", command=None)
+    novot = Button(principal, relief=GROOVE,text="Lista de no votantes", command=None)
     listaC.pack(padx=10, pady=5, side="top", fill="x")
     cantidadV.pack(padx=10, pady=5, side="top", fill="x")
     seguidoresC.pack(padx=10, pady=5, side="top", fill="x")
@@ -180,15 +191,14 @@ try:
     f.close()
 except:
     relleno=0
-registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
-cargarDatos=Button(principal,text="Cargar Datos",command=generarMiembro)
-registrarC=Button(principal,text="Registrar Candidato",command=postularMiembro)
-generarV=Button(principal,text="Generar Votación",command=lambda:generarVotacion(contC,listaMiembros,diccionarioVotos))
-reporte=Button(principal,text="Reportes",command=reportes)
+registrarM=Button(principal,relief=GROOVE,text="Registrar Miembro",command=registrarMiembro)
+cargarDatos=Button(principal,relief=GROOVE,text="Cargar Datos",command=generarMiembro)
+registrarC=Button(principal,relief=GROOVE,text="Registrar Candidato",command=postularMiembro)
+generarV=Button(principal,relief=GROOVE,text="Generar Votación",command=lambda:generarVotacion(contC,listaMiembros,diccionarioVotos))
+reporte=Button(principal,relief=GROOVE,text="Reportes",command=reportes)
 registrarM.pack(padx=10, pady=5,side="top", fill="x")
 cargarDatos.pack(padx=10, pady=5,side="top", fill="x")
 registrarC.pack(padx=10, pady=5,side="top", fill="x")
-print(diccionarioVotos)
 generarV.pack(padx=10, pady=5,side="top", fill="x")
 reporte.pack(padx=10, pady=5,side="top", fill="x")
 principal.mainloop()

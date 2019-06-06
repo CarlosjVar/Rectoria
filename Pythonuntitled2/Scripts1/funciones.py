@@ -9,7 +9,7 @@ import random
 
 #Definición de funciones
 def postularCandidato (listaMiembros,contC,entryCedula,validacion):
-    x=entryCedula.get()
+    x=entryCedula.get("1.0",END)
     if not re.match ("^[0-9]{9}$",x):
         validacion.config (text="Como cédula debe introducir una serie de 9 dígitos")
         return
@@ -158,26 +158,29 @@ def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publ
     nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError,contC)
     return
 def generarVotacion(contC,listaMiembros,diccionarioVotos):
+    print(contC)
     for persona in listaMiembros:
         voto=random.randint(0,contC[0])
         persona.setVoto(voto)
     for i in range(contC[0]+1):
-        diccionarioVotos[str(i)]=0
+        llave="2019-"
+        llave=llave+str(i)
+        diccionarioVotos[str(llave)]=0
     keys=diccionarioVotos.keys()
     print(keys)
     for persona in listaMiembros:
         print("b")
         try:
             if persona.voto==0:
-                diccionarioVotos["0"]+=1
+                diccionarioVotos["2019-0"]+=1
             elif persona.voto==1:
-                diccionarioVotos["1"] += 1
+                diccionarioVotos["2019-1"] += 1
             elif persona.voto==2:
-                diccionarioVotos["2"] += 1
+                diccionarioVotos["2019-2"] += 1
             elif persona.voto==3:
-                diccionarioVotos["3"] += 1
+                diccionarioVotos["2019-3"] += 1
             elif persona.voto==4:
-                diccionarioVotos["4"] += 1
+                diccionarioVotos["2019-4"] += 1
         except:
             pass
     keys=diccionarioVotos.keys()
@@ -189,7 +192,7 @@ def analisisVotacion(diccionarioVotos,listaMiembros,contC):
     mayor=0
     ganador=0
     poblacion=contarPoblación(listaMiembros)
-    for i in range(contC[0]):
+    for i in range(1,contC[0]):
         if diccionarioVotos[i]>mayor:
             mayor=diccionarioVotos[i]
             ganador=i
