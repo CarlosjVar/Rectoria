@@ -15,6 +15,7 @@ tipo=0
 carreralist=["IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
 AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
 contC=[0]
+diccionarioVotos={}
 
 ##Funciones Botones
 def postularMiembro():
@@ -43,7 +44,7 @@ def generarMiembro():
     labelCant.place(x=25,y=26)
     validacion=Label(generarM,text="")
     validacion.place(x=200,y=100)
-    generar=Button(generarM, text="Generar miembros",command=lambda: crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacion))
+    generar=Button(generarM, text="Generar miembros",command=lambda: crearAlAzar(entryCant,carreralist,AdminList,nombList,listaMiembros,validacion,contC))
     generar.place(x=50,y=100)
     generarM.mainloop()
 
@@ -92,7 +93,7 @@ def registrarMiembro():
     ttk.Separator(registM).place(x=0, y=360, relwidth=1)
     infoError=Label(registM,text="Aquí van a ir las validaciones")
     infoError.place(x=145,y=365)
-    registrar=Button(registM,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError))
+    registrar=Button(registM,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC))
     registrar.place(x=70,y=400)
     limpiar=Button(registM,text="Limpiar",width=20,command=lambda :botonLimp(entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt))
     limpiar.place(x=240,y=400)
@@ -173,6 +174,8 @@ principal.title("Elecciones TEC")
 try:
     with open("padrón.txt","rb") as f:
         listaMiembros=pickle.load(f)
+    with open("contador.txt","rb")as g:
+        contC=pickle.load(g)
     msg=messagebox.showinfo("Padrón","Se ha cargado un padrón guardado anteriormente")
     f.close()
 except:
@@ -180,11 +183,12 @@ except:
 registrarM=Button(principal,text="Registrar Miembro",command=registrarMiembro)
 cargarDatos=Button(principal,text="Cargar Datos",command=generarMiembro)
 registrarC=Button(principal,text="Registrar Candidato",command=postularMiembro)
-generarV=Button(principal,text="Generar Votación",command=None)
+generarV=Button(principal,text="Generar Votación",command=lambda:generarVotacion(contC,listaMiembros,diccionarioVotos))
 reporte=Button(principal,text="Reportes",command=reportes)
 registrarM.pack(padx=10, pady=5,side="top", fill="x")
 cargarDatos.pack(padx=10, pady=5,side="top", fill="x")
 registrarC.pack(padx=10, pady=5,side="top", fill="x")
+print(diccionarioVotos)
 generarV.pack(padx=10, pady=5,side="top", fill="x")
 reporte.pack(padx=10, pady=5,side="top", fill="x")
 principal.mainloop()
