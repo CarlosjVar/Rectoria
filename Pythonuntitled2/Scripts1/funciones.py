@@ -23,7 +23,7 @@ def postularCandidato (listaMiembros,contC,entryCedula,validacion):
                     objeto.setCandidato("2019-"+str(contC[0]+1))
                     contC[0]=contC[0]+1
                     validacion.config (text="Se ha postulado a "+objeto.getnombreCompleto()+" como "+str(contC[0])+"° candidato")
-                    guardarPadron (listaMiembros,contC)
+                    guardarPadron(listaMiembros,contC)
                     return
                 else:
                     validacion.config(text="Ese profesor ya se encuentra registrado como candidato")
@@ -244,7 +244,7 @@ def infoCandidatos(listaMiembros):
         reporte.write("<meta charset=UTF-16>")
         reporte.write("<head>")
         reporte.write("<style>")
-        reporte.write("table, th, td {border: 1px solid black; border-collapse: collapse;}")
+        reporte.write("table, th, td {border: 1px solid black; border-collapse: collapse;}tr:nth-child(odd) {background-color: #9B9B9B;}")
         reporte.write("</style>")
         reporte.write("</head>")
         reporte.write("<body>")
@@ -257,7 +257,6 @@ def infoCandidatos(listaMiembros):
         for persona in listaMiembros:
             if persona.tipo=="profesor":
                 if persona.candidato!="":
-                    print(persona.candidato)
                     fila=templateFila.format(p1=persona.cedula,p2=persona.nombreCompleto,p3=persona.telefono,p4=persona.publicaciones)
                     reporte.write(fila)
         reporte.write("</table>")
