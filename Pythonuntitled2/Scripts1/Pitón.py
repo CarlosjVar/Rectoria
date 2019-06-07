@@ -16,7 +16,7 @@ carreralist=["IC-Ingeniería en Computación","ATI-Administración en Tecnologí
 AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
 contC=[0]
 diccionarioVotos={}
-
+añoVotacion=["0000"]
 ##Funciones Botones
 def confirmacionCandidato(listaMiembros,contC,entryCedula,validacion2):
     MsgBox = messagebox.askquestion('Confirmación', '¿Esta seguro que desea postular a esta persona?')
@@ -160,6 +160,31 @@ def botonLimp(lista):
             widget.delete(0, END)
         except:
             widget.delete('1.0', END)
+def genVota():
+    listaAños=["2019","2023","2027","2031","2035","2039","2043"]
+    genP=Tk()
+    genP.geometry("370x130")
+    genP.title("Generar votación")
+    genP.attributes("-toolwindow", 1)
+    label=Label(genP,text="Indicar año")
+    label.grid(row=0,column=0,padx=40,pady=20,sticky=W)
+    años=ttk.Combobox(genP, values=listaAños, width=30)
+    años.grid(row=0,column=1,sticky=W,pady=20)
+    generar=Button(genP,width=20,relief=GROOVE,text="Elegir",command=lambda: confirmarVotacion(diccionarioVotos,contC,listaMiembros))
+    generar.place(x=50,y=80)
+    regresar=Button(genP,relief=GROOVE,width=20,text="Regresas",command=lambda: destruir(genP))
+    regresar.place(x=210,y=80)
+    genP.mainloop()
+def destruir(ventana):
+    ventana.destroy()
+def confirmarVotacion (diccionarioVotos,contC,listaMiembros):
+    MsgBox = messagebox.askquestion('Confirmación', '¿Esta seguro que desea generar una nueva votación?')
+    if MsgBox == 'yes':
+        return generarVotacionFinal(diccionarioVotos,listaMiembros,contC)
+    else:
+        return
+
+
 
 def reportes():
     principal = Tk()
@@ -194,7 +219,7 @@ except:
 registrarM=Button(principal,relief=GROOVE,text="Registrar Miembro",command=registrarMiembro)
 cargarDatos=Button(principal,relief=GROOVE,text="Cargar Datos",command=generarMiembro)
 registrarC=Button(principal,relief=GROOVE,text="Registrar Candidato",command=postularMiembro)
-generarV=Button(principal,relief=GROOVE,text="Generar Votación",command=lambda:generarVotacion(contC,listaMiembros,diccionarioVotos))
+generarV=Button(principal,relief=GROOVE,text="Generar Votación",command=genVota)
 reporte=Button(principal,relief=GROOVE,text="Reportes",command=reportes)
 registrarM.pack(padx=10, pady=5,side="top", fill="x")
 cargarDatos.pack(padx=10, pady=5,side="top", fill="x")

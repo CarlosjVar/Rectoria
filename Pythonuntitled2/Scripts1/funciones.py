@@ -19,12 +19,16 @@ def postularCandidato (listaMiembros,contC,entryCedula,validacion):
     for objeto in listaMiembros:
         if objeto.getTipo()=="profesor":
             if objeto.getCedula()==int(x):
-                objeto.setCandidato("2019-"+str(contC[0]+1))
-                contC[0]=contC[0]+1
-                validacion.config (text="Se ha postulado a "+objeto.getnombreCompleto()+" como "+str(contC[0])+"° candidato")
-                guardarPadron (listaMiembros,contC)
-                return
-    validacion.config (text="No se ha encontrado ningún profesor con el número de cédula indicado")
+                if objeto.getCandidato()=="":
+                    objeto.setCandidato("2019-"+str(contC[0]+1))
+                    contC[0]=contC[0]+1
+                    validacion.config (text="Se ha postulado a "+objeto.getnombreCompleto()+" como "+str(contC[0])+"° candidato")
+                    guardarPadron (listaMiembros,contC)
+                    return
+                else:
+                    validacion.config(text="Ese profesor ya se encuentra registrado como candidato")
+                    return
+    validacion.config (text="No se ha encontrado ningún profesor \n con el número de cédula indicado")
     return
 
 
@@ -158,7 +162,6 @@ def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publ
     nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError,contC)
     return
 def generarVotacion(contC,listaMiembros,diccionarioVotos):
-    print(contC)
     for persona in listaMiembros:
         voto=random.randint(0,contC[0])
         persona.setVoto(voto)
@@ -169,7 +172,6 @@ def generarVotacion(contC,listaMiembros,diccionarioVotos):
     keys=diccionarioVotos.keys()
     print(keys)
     for persona in listaMiembros:
-        print("b")
         try:
             if persona.voto==0:
                 diccionarioVotos["2019-0"]+=1
@@ -183,31 +185,56 @@ def generarVotacion(contC,listaMiembros,diccionarioVotos):
                 diccionarioVotos["2019-4"] += 1
         except:
             pass
-    keys=diccionarioVotos.keys()
-    for llave in keys:
-        print(diccionarioVotos[llave])
-
+    print(diccionarioVotos["2019-1"])
     return diccionarioVotos
 def analisisVotacion(diccionarioVotos,listaMiembros,contC):
     mayor=0
-    ganador=0
-    poblacion=contarPoblación(listaMiembros)
-    for i in range(1,contC[0]):
-        if diccionarioVotos[i]>mayor:
-            mayor=diccionarioVotos[i]
-            ganador=i
-
-
-
-
-
-
-
+    ganador=""
+    print(diccionarioVotos["2019-1"])
+    for i in range(1,contC[0]+1):
+        llave="2019-"
+        llave=llave+str(i)
+        print(llave)
+        if diccionarioVotos[llave]>mayor:
+            mayor=diccionarioVotos[llave]
+            ganador=llave
+            print(llave)
+        elif diccionarioVotos[llave]==mayor:
+            pass
+    diccionarioVotos["ganador"]=ganador
+    print(diccionarioVotos["ganador"])
+    return diccionarioVotos
 def contarPoblacion(listaMiembros):
     contP=0
     for persona in listaMiembros:
         contP+=1
     return contP
+
+def generarVotacionFinal(diccionarioVotos,listaMiembros,contC):
+    diccionarioVotos=generarVotacion(contC,listaMiembros,diccionarioVotos)
+    diccionarioVotos=analisisVotacion(diccionarioVotos,listaMiembros,contC)
+    pobla=contarPoblacion(listaMiembros)
+    keyganador=diccionarioVotos["ganador"]
+    print("\n\n")
+    print(keyganador)
+    print("Aquí está el print")
+    print("\n\n")
+    votosGanador=diccionarioVotos[keyganador]
+    porcentaje=(votosGanador*100)/pobla
+    print(porcentaje)
+    for persona in listaMiembros:
+        try:
+            print(persona.candidato)
+            print(diccionarioVotos[persona.candidato])
+            print(persona.nombreCompleto)
+            if persona.candidato==keyganador:
+                msg=messagebox.showinfo("Resultados", "El ganador fue: "+persona.nombreCompleto+" con un porcentaje de: "+str(porcentaje)+"%")
+        except:
+            pass
+    return
+
+
+
 
     
 
@@ -230,6 +257,7 @@ def infoCandidatos(listaMiembros):
         for persona in listaMiembros:
             if persona.tipo=="profesor":
                 if persona.candidato!="":
+                    print(persona.candidato)
                     fila=templateFila.format(p1=persona.cedula,p2=persona.nombreCompleto,p3=persona.telefono,p4=persona.publicaciones)
                     reporte.write(fila)
         reporte.write("</table>")
