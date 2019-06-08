@@ -63,6 +63,7 @@ def generarMiembro():
 def registrarMiembro():
     carreralist=["","IC-Ingeniería en Computación","ATI-Administración en Tecnologías de la Información","E-Electrónica","AE-Administración de Empresas","CA-Ingeniería en Computadores"]
     registM=Tk()
+    registM.attributes("-toolwindow", 1)
     registM.geometry("460x450")
     registM.title("Registrar Miembro")
     cedlab=Label(registM,text="Cédula")
@@ -105,7 +106,7 @@ def registrarMiembro():
     ttk.Separator(registM).place(x=0, y=360, relwidth=1)
     infoError=Label(registM,text="Aquí van a ir las validaciones")
     infoError.place(x=145,y=365)
-    registrar=Button(registM,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC))
+    registrar=Button(registM,relief=GROOVE,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC))
     registrar.place(x=70,y=400)
     limpiar=Button(registM,relief=GROOVE,text="Limpiar",width=20,command=lambda :botonLimp([entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt]))
     limpiar.place(x=240,y=400)
@@ -130,6 +131,7 @@ def mostrarTodo (listaMiembros):
 def radioEST(a,b,c,d,e):
     global tipo
     tipo=1
+    botonLimp([c, d, e])
     a.config(state=NORMAL)
     b.config(state=NORMAL)
     c.config(state=DISABLED)
@@ -139,6 +141,7 @@ def radioEST(a,b,c,d,e):
 def radioProf(a,b,c,d,e):
     global tipo
     tipo=2
+    botonLimp([a, b, d, e])
     a.config(state=DISABLED)
     b.config(state=DISABLED)
     c.config(state=NORMAL)
@@ -148,6 +151,7 @@ def radioProf(a,b,c,d,e):
 def radioAdmi(a,b,c,d,e):
     global tipo
     tipo=3
+    botonLimp([a, b, c])
     a.config(state=DISABLED)
     b.config(state=DISABLED)
     c.config(state=DISABLED)
