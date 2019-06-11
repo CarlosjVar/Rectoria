@@ -152,6 +152,24 @@ def esAscendente (lista,cont):
         return False
     else:
         return esAscendente(lista,cont+1)
+def sumarecursiva(num):
+    if num==0:
+        return 0
+    if num!=0:
+        return num+sumarecursiva(num-1)
+def primosEnRango(num1,num2):
+    if num1==num2:
+        return 0
+    if num1<num2:
+        if esPrimo(num1):
+            return 1+primosEnRango(num1+1,num2)
+        else:
+            return primosEnRango(num1+1,num2)
+def esPrimo(num):
+    for i in range(2,num):
+        if (num%i)==0:
+             return False
+    return  True
 
 
 #P.P.
@@ -189,6 +207,12 @@ lista3=[1,10,100,100000,2,10000000]
 print ("La entrada fue: "+str(lista3))
 print ("Salida: "+str(esAscendente(lista3,0)))
 print ("***************************************")
+print("******************carlos*********************")
+print(sumarecursiva(6))
+
+print(primosEnRango(1,30))
+
+
 
 
 
