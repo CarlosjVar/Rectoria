@@ -152,12 +152,55 @@ def esAscendente (lista,cont):
         return False
     else:
         return esAscendente(lista,cont+1)
+
+def separarListaImpares (plista):
+    """"
+    Funcionamiento: Dada una lista, devuelve otra lista conformada por los elementos
+    en las posiciones impares de la lista original (contando desde cero)
+    Entradas: plista (list)
+    Salidas: Una lista con los elementos en posición impar
+    """
+    if plista==[]:
+        return []
+    if esPar(len(plista)):
+        return [plista[0]]+separarListaImpares (plista[1:])
+    else:
+        return []+separarListaImpares (plista[1:])
+
+def separarListaPares (plista):
+    """"
+    Funcionamiento: Dada una lista, devuelve otra lista conformada por los elementos
+    en las posiciones pares de la lista original (contando desde cero)
+    Entradas: plista (list)
+    Salidas: Una lista con los elementos en posición par
+    """
+    if plista==[]:
+        return []
+    if not esPar(len(plista)):
+        return [plista[0]]+separarListaPares (plista[1:])
+    else:
+        return []+separarListaPares (plista[1:])
+    
+def auxSepararLista (plista):
+    """"
+    Funcionamiento: Dada una lista, devuelve otra lista con dos sublistas,
+    la primera con los elementos en la posición impar, y la segunda con los
+    elementos en la posición par
+    Entradas: plista (list)
+    Salidas: Una lista que contiene dos sublistas de posiciones impares y pares
+    """
+    if plista==[]:
+        return "La lista no debe estar vacía"
+    else:
+        return [separarListaImpares (plista),separarListaPares (plista)]
+    
 def sumarecursiva(num):
     if num==0:
         return 0
     if num!=0:
         return num+sumarecursiva(num-1)
 def primosEnRango(num1,num2):
+    
     if num1==num2:
         return 0
     if num1<num2:
@@ -165,6 +208,7 @@ def primosEnRango(num1,num2):
             return 1+primosEnRango(num1+1,num2)
         else:
             return primosEnRango(num1+1,num2)
+        
 def esPrimo(num):
     for i in range(2,num):
         if (num%i)==0:
@@ -197,11 +241,11 @@ lista=[1,4,1,1,1,4,1]
 print ("Las entradas fueron: ele="+str(ele)+", ref="+str(ref)+", lista="+str(lista))
 print ("Salida: "+str(insertarEnReferencia (ele,ref,lista,0)))
 print ("***************************************")
-#print("3:Separar elementos en posición par e impar")
-#lista2=[1,2,3,4,5,6,7,8,9]
-#print ("La entrada fue: "+str(lista2))
-#print ("Salida: "+str(separarLista(lista2)))
-#print ("***************************************")
+print("3:Separar elementos en posición par e impar")
+lista2=[0,1,2,3,4,5,6,7,8]
+print ("La entrada fue: "+str(lista2))
+print ("Salida: "+str(auxSepararLista(lista2)))
+print ("***************************************")
 print("5:Determinar si la lista es ascendente")
 lista3=[1,10,100,100000,2,10000000]
 print ("La entrada fue: "+str(lista3))
@@ -209,7 +253,6 @@ print ("Salida: "+str(esAscendente(lista3,0)))
 print ("***************************************")
 print("******************carlos*********************")
 print(sumarecursiva(6))
-
 print(primosEnRango(1,30))
 
 
