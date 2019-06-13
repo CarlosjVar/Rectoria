@@ -8,7 +8,7 @@ import pickle
 import random
 
 #Definición de funciones
-def postularCandidato (listaMiembros,contC,entryCedula,validacion):
+def postularCandidato (listaMiembros,contC,entryCedula,validacion,generarV):
     x=entryCedula.get("1.0",END)
     if not re.match ("^[0-9]{9}$",x):
         validacion.config (text="Como cédula debe introducir una serie de 9 dígitos")
@@ -22,6 +22,8 @@ def postularCandidato (listaMiembros,contC,entryCedula,validacion):
                 if objeto.getCandidato()=="":
                     objeto.setCandidato("2019-"+str(contC[0]+1))
                     contC[0]=contC[0]+1
+                    if contC[0]>1:
+                        generarV.config(state=NORMAL)
                     validacion.config (text="Se ha postulado a "+objeto.getnombreCompleto()+" como "+str(contC[0])+"° candidato")
                     guardarPadron(listaMiembros,contC)
                     return
@@ -170,7 +172,6 @@ def generarVotacion(contC,listaMiembros,diccionarioVotos):
         llave=llave+str(i)
         diccionarioVotos[str(llave)]=0
     keys=diccionarioVotos.keys()
-    print(keys)
     for persona in listaMiembros:
         try:
             if persona.voto==0:
@@ -185,24 +186,19 @@ def generarVotacion(contC,listaMiembros,diccionarioVotos):
                 diccionarioVotos["2019-4"] += 1
         except:
             pass
-    print(diccionarioVotos["2019-1"])
     return diccionarioVotos
 def analisisVotacion(diccionarioVotos,listaMiembros,contC):
     mayor=0
     ganador=""
-    print(diccionarioVotos["2019-1"])
     for i in range(1,contC[0]+1):
         llave="2019-"
         llave=llave+str(i)
-        print(llave)
         if diccionarioVotos[llave]>mayor:
             mayor=diccionarioVotos[llave]
             ganador=llave
-            print(llave)
         elif diccionarioVotos[llave]==mayor:
             pass
     diccionarioVotos["ganador"]=ganador
-    print(diccionarioVotos["ganador"])
     return diccionarioVotos
 def contarPoblacion(listaMiembros):
     contP=0
@@ -215,18 +211,10 @@ def generarVotacionFinal(diccionarioVotos,listaMiembros,contC):
     diccionarioVotos=analisisVotacion(diccionarioVotos,listaMiembros,contC)
     pobla=contarPoblacion(listaMiembros)
     keyganador=diccionarioVotos["ganador"]
-    print("\n\n")
-    print(keyganador)
-    print("Aquí está el print")
-    print("\n\n")
     votosGanador=diccionarioVotos[keyganador]
     porcentaje=(votosGanador*100)/pobla
-    print(porcentaje)
     for persona in listaMiembros:
         try:
-            print(persona.candidato)
-            print(diccionarioVotos[persona.candidato])
-            print(persona.nombreCompleto)
             if persona.candidato==keyganador:
                 msg=messagebox.showinfo("Resultados", "El ganador fue: "+persona.nombreCompleto+" con un porcentaje de: "+str(porcentaje)+"%")
         except:
@@ -238,7 +226,7 @@ def generarVotacionFinal(diccionarioVotos,listaMiembros,contC):
 
     
 
-def infoCandidatos(listaMiembros):
+def infoCandidatos(listaMiembros,añovotacion):
     with open("Reporte.html","w",encoding="UTF-8") as reporte:
         reporte.write("<!DOCTYPE html>")
         reporte.write("<meta charset=UTF-16>")
@@ -249,11 +237,13 @@ def infoCandidatos(listaMiembros):
         reporte.write("</head>")
         reporte.write("<body>")
         reporte.write("<table border=1 align=center>")
-        reporte.write("<caption>Candidatos para rector</caption")
+        templateheader="""<caption>Candidatos para rector<br>Periodo: {año}</caption"""
+        header=templateheader.format(año=añovotacion[0])
+        reporte.write(header)
         reporte.write("<tr><td>Cédula</td><td>Nombre Completo</td><td>Teléfono</td><td>Publicaciones</td></tr>")
         templateFila="""<tr>
-        <td>"{p1}"</td>
-        <td>"{p2}"</td>)<td>"{p3}"</td><td>"{p4}"</td></tr>"""
+        <td>{p1}</td>
+        <td>{p2}</td>)<td>{p3}</td><td>{p4}</td></tr>"""
         for persona in listaMiembros:
             if persona.tipo=="profesor":
                 if persona.candidato!="":
