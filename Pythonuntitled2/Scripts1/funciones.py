@@ -221,11 +221,6 @@ def generarVotacionFinal(diccionarioVotos,listaMiembros,contC):
             pass
     return
 
-
-
-
-    
-
 def infoCandidatos(listaMiembros,añovotacion):
     with open("Reporte.html","w",encoding="UTF-8") as reporte:
         reporte.write("<!DOCTYPE html>")
@@ -251,4 +246,31 @@ def infoCandidatos(listaMiembros,añovotacion):
                     reporte.write(fila)
         reporte.write("</table>")
         reporte.write("</body>")
-
+def cantidadporcandidato(listaMiembros,añovotacion,diccionarioVotos):
+    with open("Reporte.html", "w", encoding="UTF-8") as reporte:
+        reporte.write("<!DOCTYPE html>")
+        reporte.write("<meta charset=UTF-16>")
+        reporte.write("<head>")
+        reporte.write("<style>")
+        reporte.write("table, th, td {border: 1px solid black; border-collapse: collapse;}tr:nth-child(odd) {background-color: #9B9B9B;}")
+        reporte.write("</style>")
+        reporte.write("</head>")
+        reporte.write("<body>")
+        reporte.write("<table border=1 align=center>")
+        templateheader = """<caption>Cantidad de votantes por candidato<br>Periodo: {año}</caption"""
+        header = templateheader.format(año=añovotacion[0])
+        reporte.write(header)
+        reporte.write("<tr><td>Nombre del candidato</td><td>Cantidad de votantes</td><td>Porcentaje de votos</td></tr>")
+        template="""<tr>
+        <td>{p1}</td>
+        <td>{p2}</td>)<td>{p3}</td></tr>"""
+        for persona in listaMiembros:
+            if persona.tipo=="profesor":
+                if persona.candidato!="":
+                    votostot=contarPoblacion(listaMiembros)
+                    votoscandi=diccionarioVotos[persona.candidato]
+                    votostot=round((votoscandi/votostot)*100)
+                    fila=template.format(p1=persona.nombreCompleto,p2=votoscandi,p3=votostot)
+                    reporte.write(fila)
+        reporte.write("</table>")
+        reporte.write("</body>")

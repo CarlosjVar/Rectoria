@@ -212,7 +212,7 @@ def reportes(principal):
     principal.title("Elecciones TEC")
     principal.attributes("-toolwindow", 1)
     listaC = Button(principal,relief=GROOVE, text="Lista de Candidatos", command= lambda: infoCandidatos(listaMiembros,añoVotacion))
-    cantidadV = Button(principal,relief=GROOVE, text="Cantidad de votantes por candidato", command=None)
+    cantidadV = Button(principal,relief=GROOVE, text="Cantidad de votantes por candidato", command=lambda:cantidadporcandidato(listaMiembros,añoVotacion,diccionarioVotos))
     seguidoresC = Button(principal,relief=GROOVE, text="Seguidores por candidato", command=None)
     votRol = Button(principal, relief=GROOVE,text="Votante por rol", command=None)
     novot = Button(principal, relief=GROOVE,text="Lista de no votantes", command=None)
