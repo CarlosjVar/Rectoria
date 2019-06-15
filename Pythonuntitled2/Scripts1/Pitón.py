@@ -17,6 +17,8 @@ AdminList=["Secretaria","Asistente Administrativa","Director","Coordinador"]
 contC=[0]
 diccionarioVotos={}
 añoVotacion=["0000"]
+listaAños=["2019","2023","2027","2031","2035","2039","2043"]
+
 ##Funciones Botones
 def cerrarVentana(principal):
     principal.lift()
@@ -114,7 +116,7 @@ def registrarMiembro(principal):
     ExtEnt=Entry(registM,width=20)
     ExtEnt.grid(row=10,column=1,sticky=W)
     ttk.Separator(registM).place(x=0, y=360, relwidth=1)
-    infoError=Label(registM,text="Aquí van a ir las validaciones")
+    infoError=Label(registM,text="")
     infoError.place(x=145,y=365)
     registrar=Button(registM,relief=GROOVE,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC))
     registrar.place(x=70,y=400)
@@ -174,8 +176,8 @@ def botonLimp(lista):
             widget.delete(0, END)
         except:
             widget.delete('1.0', END)
-def genVota(principal):
-    listaAños=["2019","2023","2027","2031","2035","2039","2043"]
+            
+def genVota(principal,listaAños):
     genP=Tk()
     genP.focus()
     genP.attributes("-toolwindow", 1)
@@ -189,11 +191,13 @@ def genVota(principal):
     años.grid(row=0,column=1,sticky=W,pady=20)
     generar=Button(genP,width=20,relief=GROOVE,text="Elegir",command=lambda: confirmarVotacion(diccionarioVotos,contC,listaMiembros,añoVotacion,años))
     generar.place(x=50,y=80)
-    regresar=Button(genP,relief=GROOVE,width=20,text="Regresas",command=lambda: destruir(genP))
+    regresar=Button(genP,relief=GROOVE,width=20,text="Regresar",command=lambda: destruir(genP))
     regresar.place(x=210,y=80)
     genP.mainloop()
+    
 def destruir(ventana):
     ventana.destroy()
+    
 def confirmarVotacion (diccionarioVotos,contC,listaMiembros,añoVotacion,años):
     MsgBox = messagebox.askquestion('Confirmación', '¿Esta seguro que desea generar una nueva votación?')
     if MsgBox == 'yes':
@@ -201,8 +205,6 @@ def confirmarVotacion (diccionarioVotos,contC,listaMiembros,añoVotacion,años):
         return generarVotacionFinal(diccionarioVotos,listaMiembros,contC)
     else:
         return
-
-
 
 def reportes(principal):
     principal = Tk()

@@ -163,6 +163,7 @@ def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publ
     a=int(a)
     nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,a,tipo,infoError,contC)
     return
+
 def generarVotacion(contC,listaMiembros,diccionarioVotos):
     for persona in listaMiembros:
         voto=random.randint(0,contC[0])
@@ -187,6 +188,7 @@ def generarVotacion(contC,listaMiembros,diccionarioVotos):
         except:
             pass
     return diccionarioVotos
+
 def analisisVotacion(diccionarioVotos,listaMiembros,contC):
     mayor=0
     ganador=""
@@ -200,6 +202,7 @@ def analisisVotacion(diccionarioVotos,listaMiembros,contC):
             pass
     diccionarioVotos["ganador"]=ganador
     return diccionarioVotos
+
 def contarPoblacion(listaMiembros):
     contP=0
     for persona in listaMiembros:
@@ -213,6 +216,7 @@ def generarVotacionFinal(diccionarioVotos,listaMiembros,contC):
     keyganador=diccionarioVotos["ganador"]
     votosGanador=diccionarioVotos[keyganador]
     porcentaje=(votosGanador*100)/pobla
+    porcentaje=round(porcentaje,2)
     for persona in listaMiembros:
         try:
             if persona.candidato==keyganador:
@@ -246,6 +250,7 @@ def infoCandidatos(listaMiembros,añovotacion):
                     reporte.write(fila)
         reporte.write("</table>")
         reporte.write("</body>")
+
 def cantidadporcandidato(listaMiembros,añovotacion,diccionarioVotos):
     with open("Reporte.html", "w", encoding="UTF-8") as reporte:
         reporte.write("<!DOCTYPE html>")
