@@ -3,7 +3,7 @@ class Persona():
     cedula=0
     nombreCompleto=""
     telefono=0
-    voto=0
+    voto=None
     
     "Médotos"
     def __init__(self,ced,nC,tel):
@@ -60,6 +60,7 @@ class Estudiante (Persona):
         print("Nombre: "+self.nombreCompleto)
         print("Carnet: "+str(self.carnet))
         print("Carrera: "+str(self.carrera))
+        print("Voto: "+str(self.voto))
         print("*******************")
         return
 
@@ -95,6 +96,7 @@ class Profesor(Persona):
         print("Nombre: "+self.nombreCompleto)
         print("Publicaciones: "+self.publicaciones)
         print("Candidatura: "+self.candidato)
+        print("Voto: "+str(self.voto))
         print("*******************")
         return
 
@@ -127,6 +129,7 @@ class Administrativo(Persona):
         print("Nombre: "+self.nombreCompleto)
         print("Puesto: "+self.puesto)
         print("Extensión: "+str(self.extension))
+        print("Voto: "+str(self.voto))
         print("*******************")
         return
 

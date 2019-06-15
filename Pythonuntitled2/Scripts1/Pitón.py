@@ -178,6 +178,9 @@ def botonLimp(lista):
             widget.delete('1.0', END)
             
 def genVota(principal,listaAños):
+    if contC[0]==0:
+        msg=messagebox.showinfo("Error","No se han postulado candidatos aún")
+        return
     genP=Tk()
     genP.focus()
     genP.attributes("-toolwindow", 1)
@@ -217,7 +220,7 @@ def reportes(principal):
     cantidadV = Button(principal,relief=GROOVE, text="Cantidad de votantes por candidato", command=lambda:cantidadporcandidato(listaMiembros,añoVotacion,diccionarioVotos))
     seguidoresC = Button(principal,relief=GROOVE, text="Seguidores por candidato", command=None)
     votRol = Button(principal, relief=GROOVE,text="Votante por rol", command=None)
-    novot = Button(principal, relief=GROOVE,text="Lista de no votantes", command=None)
+    novot = Button(principal, relief=GROOVE,text="Lista de no votantes", command=lambda: listaNoVotantes(listaMiembros,añoVotacion,diccionarioVotos))
     listaC.pack(padx=10, pady=5, side="top", fill="x")
     cantidadV.pack(padx=10, pady=5, side="top", fill="x")
     seguidoresC.pack(padx=10, pady=5, side="top", fill="x")
@@ -235,21 +238,22 @@ try:
         listaMiembros=pickle.load(f)
     with open("contador.txt","rb")as g:
         contC=pickle.load(g)
+    with open("diccionario.txt","rb") as h:
+        diccionarioVotos=pickle.load(h)
     msg=messagebox.showinfo("Padrón","Se ha cargado un padrón guardado anteriormente")
     f.close()
+    g.close()
+    h.close()
 except:
-    relleno=0
+    pass
 registrarM=Button(principal,relief=GROOVE,text="Registrar Miembro",command=lambda:registrarMiembro(principal))
 cargarDatos=Button(principal,relief=GROOVE,text="Cargar Datos",command=lambda:generarMiembro(principal))
 registrarC=Button(principal,relief=GROOVE,text="Registrar Candidato",command=lambda:postularMiembro(principal))
-generarV=Button(principal,relief=GROOVE,text="Generar Votación",command=lambda:genVota(principal))
+generarV=Button(principal,relief=GROOVE,text="Generar Votación",command=lambda:genVota(principal,listaAños))
 reporte=Button(principal,relief=GROOVE,text="Reportes",command=lambda:reportes(principal))
 registrarM.pack(padx=10, pady=5,side="top", fill="x")
 cargarDatos.pack(padx=10, pady=5,side="top", fill="x")
 registrarC.pack(padx=10, pady=5,side="top", fill="x")
 generarV.pack(padx=10, pady=5,side="top", fill="x")
 reporte.pack(padx=10, pady=5,side="top", fill="x")
-if contC[0]==0:
-    generarV.config(state=DISABLED)
-
 principal.mainloop()

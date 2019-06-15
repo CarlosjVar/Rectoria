@@ -124,6 +124,11 @@ def nuevoMiembro(carreralist,listaMiembros,x,y,entrycarn,Publicaciones,ExtEnt,ca
     infoError.config (text="Miembro registrado")
     return
 
+def guardarDiccionario(diccionarioVotos):
+    with open("diccionario.txt","wb") as f:
+        pickle.dump(diccionarioVotos,f)
+        f.close()
+    return
 
 def guardarPadron (listaMiembros,contC):
     with open("padrón.txt","wb") as f:
@@ -140,8 +145,6 @@ def confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entry
         auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC)
     return
 
-
-    
 def auxnuevoMiembro (carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC):
     x=entryCed.get()
     y=entryNomb.get()
@@ -215,6 +218,7 @@ def generarVotacionFinal(diccionarioVotos,listaMiembros,contC):
     pobla=contarPoblacion(listaMiembros)
     keyganador=diccionarioVotos["ganador"]
     votosGanador=diccionarioVotos[keyganador]
+    guardarDiccionario(diccionarioVotos)
     porcentaje=(votosGanador*100)/pobla
     porcentaje=round(porcentaje,2)
     for persona in listaMiembros:
@@ -252,6 +256,9 @@ def infoCandidatos(listaMiembros,añovotacion):
         reporte.write("</body>")
 
 def cantidadporcandidato(listaMiembros,añovotacion,diccionarioVotos):
+    if diccionarioVotos=={}:
+        msg=messagebox.showinfo("Error","No se ha realizado una votación aún")
+        return
     with open("Reporte.html", "w", encoding="UTF-8") as reporte:
         reporte.write("<!DOCTYPE html>")
         reporte.write("<meta charset=UTF-16>")
@@ -301,7 +308,7 @@ def listaNoVotantes(listaMiembros,añovotacion,diccionarioVotos):
         reporte.write("<tr><td>Cédula</td><td>Nombre Completo</td><td>Tipo (Est-Prof-Adm)</td></tr>")
         templateFila="""<tr><td>{p1}</td><td>{p2}</td>)<td>{p3}</td></tr>"""
         for persona in listaMiembros:
-            if persona.getVoto==0:
+            if persona.getVoto()==0:
                 fila=templateFila.format(p1=persona.cedula,p2=persona.nombreCompleto,p3=persona.tipo)
                 reporte.write(fila)
         reporte.write("</table>")
