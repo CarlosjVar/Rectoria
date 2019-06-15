@@ -279,3 +279,30 @@ def cantidadporcandidato(listaMiembros,añovotacion,diccionarioVotos):
                     reporte.write(fila)
         reporte.write("</table>")
         reporte.write("</body>")
+
+
+def listaNoVotantes(listaMiembros,añovotacion,diccionarioVotos):
+    if diccionarioVotos=={}:
+        msg=messagebox.showinfo("Error","No se ha realizado una votación aún")
+        return
+    with open("Reporte.html","w",encoding="UTF-8") as reporte:
+        reporte.write("<!DOCTYPE html>")
+        reporte.write("<meta charset=UTF-16>")
+        reporte.write("<head>")
+        reporte.write("<style>")
+        reporte.write("table, th, td {border: 1px solid black; border-collapse: collapse;}tr:nth-child(odd) {background-color: #9B9B9B;}")
+        reporte.write("</style>")
+        reporte.write("</head>")
+        reporte.write("<body>")
+        reporte.write("<table border=1 align=center>")
+        templateheader="""<caption>Lista de no votantes<br>Periodo: {año}</caption"""
+        header=templateheader.format(año=añovotacion[0])
+        reporte.write(header)
+        reporte.write("<tr><td>Cédula</td><td>Nombre Completo</td><td>Tipo (Est-Prof-Adm)</td></tr>")
+        templateFila="""<tr><td>{p1}</td><td>{p2}</td>)<td>{p3}</td></tr>"""
+        for persona in listaMiembros:
+            if persona.getVoto==0:
+                fila=templateFila.format(p1=persona.cedula,p2=persona.nombreCompleto,p3=persona.tipo)
+                reporte.write(fila)
+        reporte.write("</table>")
+        reporte.write("</body>")
