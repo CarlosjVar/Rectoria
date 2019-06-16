@@ -20,6 +20,18 @@ añoVotacion=["0000"]
 listaAños=["2019","2023","2027","2031","2035","2039","2043"]
 
 ##Funciones Botones
+def resetcandidato(diccionarioVotos,listaMiembros,contC):
+    contC[0]=0
+    diccionarioVotos={}
+    for miembro in listaMiembros:
+        miembro.voto=None
+        if miembro.getTipo()=="profesor":
+            if miembro.getCandidato()!="":
+                miembro.setCandidato("")
+    generarV.config(state=DISABLED)
+    guardarPadron(listaMiembros,contC)
+    guardarDiccionario(diccionarioVotos)
+    return
 def cerrarVentana(principal):
     principal.lift()
 def confirmacionCandidato(listaMiembros,contC,entryCedula,validacion2,generarV):
@@ -117,7 +129,7 @@ def registrarMiembro(principal):
     ExtEnt.grid(row=10,column=1,sticky=W)
     ttk.Separator(registM).place(x=0, y=360, relwidth=1)
     infoError=Label(registM,text="")
-    infoError.place(x=145,y=365)
+    infoError.place(x=100,y=365)
     registrar=Button(registM,relief=GROOVE,text="Registrar",width=20,command= lambda: confirmacionregistroNuevo(carreralist,listaMiembros,entryCed,entryNomb,entrycarn,Publicaciones,ExtEnt,carrera,puestspin,entryTel,tipo,infoError,contC))
     registrar.place(x=70,y=400)
     limpiar=Button(registM,relief=GROOVE,text="Limpiar",width=20,command=lambda :botonLimp([entryCed,entryNomb,entrycarn,Publicaciones,entryTel,ExtEnt]))
@@ -231,7 +243,6 @@ def reportes(principal):
 ##Tkinter
 principal=Tk()
 principal.geometry("230x190")
-principal.attributes("-toolwindow", 1)
 principal.title("Elecciones TEC")
 try:
     with open("padrón.txt","rb") as f:
@@ -251,9 +262,13 @@ cargarDatos=Button(principal,relief=GROOVE,text="Cargar Datos",command=lambda:ge
 registrarC=Button(principal,relief=GROOVE,text="Registrar Candidato",command=lambda:postularMiembro(principal))
 generarV=Button(principal,relief=GROOVE,text="Generar Votación",command=lambda:genVota(principal,listaAños))
 reporte=Button(principal,relief=GROOVE,text="Reportes",command=lambda:reportes(principal))
+reiniciocand=Button(principal,relief=GROOVE,text="Reset",command=lambda:resetcandidato(diccionarioVotos,listaMiembros,contC))
+reiniciocand.place(x=230,y=190)
 registrarM.pack(padx=10, pady=5,side="top", fill="x")
 cargarDatos.pack(padx=10, pady=5,side="top", fill="x")
 registrarC.pack(padx=10, pady=5,side="top", fill="x")
 generarV.pack(padx=10, pady=5,side="top", fill="x")
 reporte.pack(padx=10, pady=5,side="top", fill="x")
+if contC[0]==0:
+    generarV.config(state=DISABLED)
 principal.mainloop()

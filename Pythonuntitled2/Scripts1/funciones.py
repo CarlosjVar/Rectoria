@@ -6,7 +6,7 @@ import re
 from tkinter import messagebox
 import pickle
 import random
-
+import os
 #Definición de funciones
 def postularCandidato (listaMiembros,contC,entryCedula,validacion,generarV):
     x=entryCedula.get("1.0",END)
@@ -254,6 +254,7 @@ def infoCandidatos(listaMiembros,añovotacion):
                     reporte.write(fila)
         reporte.write("</table>")
         reporte.write("</body>")
+        os.startfile("Reporte.html")
 
 def cantidadporcandidato(listaMiembros,añovotacion,diccionarioVotos):
     if diccionarioVotos=={}:
@@ -286,6 +287,7 @@ def cantidadporcandidato(listaMiembros,añovotacion,diccionarioVotos):
                     reporte.write(fila)
         reporte.write("</table>")
         reporte.write("</body>")
+        os.startfile("Reporte.html")
 
 
 def listaNoVotantes(listaMiembros,añovotacion,diccionarioVotos):
@@ -313,3 +315,4 @@ def listaNoVotantes(listaMiembros,añovotacion,diccionarioVotos):
                 reporte.write(fila)
         reporte.write("</table>")
         reporte.write("</body>")
+        os.startfile("Reporte.html")
